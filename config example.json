@@ -1,0 +1,18 @@
+{
+    "tgtg": {
+        "access_token": "",
+        "refresh_token": "",
+        "user_id": ""
+    },
+    "telegram": {
+        "enabled": false,
+        "bot_token": "",
+        "chat_ids": []
+    },
+    "discord": {
+        "enabled": false,
+        "webhook_url": ""
+    },
+    "check_interval": 30,
+    "message": "{0.name} is now available! {0.available} items left."
+}
