@@ -31,6 +31,7 @@ class Notifier:
     def send_message(self, message: str) -> None:
         if self.config.telegram_enabled:
             self.telegram_bot.send_message(message)
+            
         if self.config.discord_enabled:
             if self.config.discord_mention:
                 message = f"@everyone {message}"

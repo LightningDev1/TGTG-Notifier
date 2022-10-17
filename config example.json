@@ -11,7 +11,10 @@
     },
     "discord": {
         "enabled": false,
-        "webhook_url": ""
+        "webhook_url": "",
+        "avatar_url": "https://s3-eu-west-1.amazonaws.com/tgtg-mkt-cms-staging/306/sF6L9I02wgeMQAfOc3lRIaOqbuNpneQmZ28FwGOD.png",
+        "username": "TGTG Notifier",
+        "mention": true
     },
     "check_interval": 30,
     "message": "{0.name} is now available! {0.available} items left."
