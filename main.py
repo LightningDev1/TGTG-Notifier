@@ -1,7 +1,19 @@
+"""
+TGTG Notifier main module
+"""
+
+import logging
+
 from config import Config
 from telegram_bot.bot import TelegramBot
 from discord_webhook.webhook import DiscordWebhook
 from tgtg_notifier.notifier import Notifier
+
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s -  %(message)s"
+)
+
+logging.info("Starting TGTG Notifier")
 
 config = Config("config.json")
 

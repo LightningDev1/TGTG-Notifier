@@ -3,6 +3,7 @@ Telegram bot for sending notifications
 """
 
 import asyncio
+import logging
 import threading
 import multiprocessing
 import platform
@@ -12,6 +13,7 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 
 from config import Config
+
 
 class TelegramBot:
     "Telegram bot class"
@@ -40,6 +42,11 @@ class TelegramBot:
             chat_ids.append(update.message.chat_id)
             self.config.telegram_chat_ids = chat_ids
             self.config.save()
+            logging.info(
+                "Added new Telegram chat ID: %s username: %s",
+                update.message.chat_id,
+                update.message.chat.username,
+            )
 
         await update.message.reply_html("TGTG Notifier ready!")
 
@@ -47,10 +54,13 @@ class TelegramBot:
         "Send a message to every Telegram chat ID"
 
         for chat_id in self.config.telegram_chat_ids:
-            requests.get(f"https://api.telegram.org/bot{self.token}/sendMessage", params={
-                "chat_id": chat_id,
-                "text": message,
-            })
+            requests.get(
+                f"https://api.telegram.org/bot{self.token}/sendMessage",
+                params={
+                    "chat_id": chat_id,
+                    "text": message,
+                },
+            )
 
     def _run(self):
         asyncio.set_event_loop(asyncio.new_event_loop())
