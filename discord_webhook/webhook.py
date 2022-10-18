@@ -13,7 +13,7 @@ class DiscordWebhook:
     def __init__(self, config: Config) -> None:
         self.config = config
 
-    def send_message(self, message: str):
+    def send_message(self, message: str) -> None:
         "Send a message to the Discord webhook"
 
         requests.post(

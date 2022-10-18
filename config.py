@@ -10,7 +10,7 @@ from typing import List
 class Config:
     "Config helper class with getters and setters for the config values"
 
-    def __init__(self, file_path) -> None:
+    def __init__(self, file_path: str) -> None:
         if not path.exists(file_path):
             raise FileNotFoundError("Config file not found")
 

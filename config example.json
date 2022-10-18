@@ -17,5 +17,5 @@
         "mention": true
     },
     "check_interval": 30,
-    "message": "{0.name} is now available! {0.available} items left."
+    "message": "{0.display_name} is now available! {0.available} items left."
 }

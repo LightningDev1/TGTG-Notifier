@@ -18,24 +18,23 @@ class Notifier:
     "Notifier class that checks TGTG for new items"
 
     def __init__(
-        self, config: Config, telegram_bot: TelegramBot, discord_webhook: DiscordWebhook
+        self,
+        config: Config,
+        tgtg_client: TgtgClient,
+        telegram_bot: TelegramBot,
+        discord_webhook: DiscordWebhook,
     ) -> None:
         self.config = config
+        self.tgtg_client = tgtg_client
         self.telegram_bot = telegram_bot
         self.discord_webhook = discord_webhook
 
         self.old_items = Items([])
 
-        self.client = TgtgClient(
-            access_token=config.tgtg_access_token,
-            refresh_token=config.tgtg_refresh_token,
-            user_id=config.tgtg_user_id,
-        )
-
     def get_new_items(self) -> List[Item]:
         "Get new items since last check"
 
-        items = Items(self.client.get_items())
+        items = Items(self.tgtg_client.get_items())
         new_items = items.get_new_items(self.old_items)
         self.old_items = items
         return new_items

@@ -2,7 +2,7 @@
 Helper classes for TGTG items
 """
 
-from typing import List
+from typing import Dict, List
 
 
 class Item:
@@ -10,12 +10,31 @@ class Item:
 
     def __init__(self, json: dict) -> None:
         self.item_id: str = json["item"]["item_id"]
-        self.name: str = json["display_name"]
+        self.display_name: str = json["display_name"]
+        self.name: str = json["item"]["name"]
+        self.store_name: str = json["store"]["store_name"]
         self.available: int = json["items_available"]
 
+        price_data: dict = json["item"]["price_including_taxes"]
 
+        self.price_int: int = price_data["minor_units"]
+        self.price_float: float = price_data["minor_units"] / 100
+        self.price_currency: str = price_data["code"]
+        self.price: str = f"{self.price_float:.2f} {self.price_currency}"
+
+
+# Used in get_item for when item_id is invalid
 default_item = Item(
-    {"item": {"item_id": "0"}, "display_name": "Unknown", "items_available": 0}
+    {
+        "item": {
+            "item_id": "0",
+            "name": "Unknown",
+            "price_including_taxes": {"minor_units": 0, "code": "EUR"},
+        },
+        "store": {"store_name": "Unknown"},
+        "display_name": "Unknown",
+        "items_available": 0,
+    }
 )
 
 
@@ -23,7 +42,7 @@ class Items:
     "Helper class with list of all new items to check for new items"
 
     def __init__(self, json: List[dict]) -> None:
-        self.items = {}
+        self.items: Dict[str, Item] = {}
 
         for item_json in json:
             item = Item(item_json)
@@ -33,6 +52,11 @@ class Items:
         "Get a specific item by its id"
 
         return self.items.get(item_id, default_item)
+
+    def get_items(self) -> List[Item]:
+        "Get all items"
+
+        return list(self.items.values())
 
     def get_new_items(self, other: "Items") -> List[Item]:
         "Compare this list of items with another list of items and return the new items"
