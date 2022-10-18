@@ -72,14 +72,14 @@ class TelegramBot:
         # Sort the items so that the available ones are at the top
         items.sort(key=lambda item: item.available, reverse=True)
 
-        table = pt.PrettyTable(["Store", "Price", "Stock"])
-        table.align["Store"] = "c"
+        table = pt.PrettyTable(["Item", "Price", "Stock"])
+        table.align["Item"] = "c"
         table.align["Price"] = "c"
         table.align["Stock"] = "c"
 
         for item in items:
             table.add_row(
-                [f"{item.store_name} {item.name}", item.price, item.available]
+                [f"{item.store_name} ({item.name})", item.price, item.available]
             )
 
         ## Create an image from the table and send it to the user

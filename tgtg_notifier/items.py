@@ -12,7 +12,7 @@ class Item:
         self.item_id: str = json["item"]["item_id"]
         self.display_name: str = json["display_name"]
         self.name: str = json["item"]["name"]
-        self.store_name: str = json["store"]["store_name"]
+        self.store_name: str = json["store"]["store_name"].rstrip()
         self.available: int = json["items_available"]
 
         price_data: dict = json["item"]["price_including_taxes"]
